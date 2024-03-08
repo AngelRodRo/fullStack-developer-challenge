@@ -6,11 +6,15 @@ import resolvers from './src/graphql/resolvers';
 
 const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
 
-const server = new ApolloServer({
+interface MyContext {
+  token?: string
+}
+
+const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers
 });
 
-void startStandaloneServer(server, { listen: { port: 4000 } }).then(({ url }) => {
+void startStandaloneServer(server, { context: async ({ req }) => ({ token: req.headers.token }), listen: { port: 4000 } }).then(({ url }) => {
   console.log(`🚀 Server listening at: ${url}`);
 });
