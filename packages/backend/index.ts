@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 
 import resolvers from './src/graphql/resolvers';
 
-const typeDefs = readFileSync('./graphql/schema.graphql', { encoding: 'utf-8' });
+const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
 
 const server = new ApolloServer({
   typeDefs,
