@@ -1,13 +1,17 @@
-import { ApolloServer } from '@apollo/server';
+import { ApolloServer, type BaseContext } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { readFileSync } from 'fs';
 
 import resolvers from './src/graphql/resolvers';
+import { UserService } from './src/services/user';
 
 const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
 
-interface MyContext {
-  token?: string
+export interface MyContext extends BaseContext {
+  token?: string | string[] | undefined
+  dataSources: {
+    userService: UserService
+  }
 }
 
 const server = new ApolloServer<MyContext>({
@@ -15,6 +19,14 @@ const server = new ApolloServer<MyContext>({
   resolvers
 });
 
-void startStandaloneServer(server, { context: async ({ req }) => ({ token: req.headers.token }), listen: { port: 4000 } }).then(({ url }) => {
+void startStandaloneServer(server, {
+  context: async ({ req }) => ({
+    token: req.headers.token,
+    dataSources: {
+      userService: new UserService()
+    }
+  }),
+  listen: { port: 4000 }
+}).then(({ url }) => {
   console.log(`🚀 Server listening at: ${url}`);
 });
