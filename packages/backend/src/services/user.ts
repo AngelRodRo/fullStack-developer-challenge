@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type User } from '@prisma/client';
 
 export class UserService {
   private readonly prisma: PrismaClient;
@@ -7,9 +7,14 @@ export class UserService {
     this.prisma = new PrismaClient();
   }
 
-  async getAll (): Promise<Array<{ name: string }>> {
+  async countAll (): Promise<number> {
+    return await this.prisma.user.count();
+  }
+
+  async getAll ({ skip, take }: { skip?: number, take?: number }): Promise<Array<Partial<User>>> {
     const users = await this.prisma.user.findMany({
       select: {
+        id: true,
         name: true,
         address: true,
         lastName: true,
@@ -17,7 +22,9 @@ export class UserService {
         email: true,
         createdAt: true,
         updatedAt: true
-      }
+      },
+      skip,
+      take
     });
     return users;
   }
