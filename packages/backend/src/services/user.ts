@@ -1,18 +1,19 @@
-import { PrismaClient, type User } from '@prisma/client';
+import { type PrismaClient, type User } from '@prisma/client';
+import client from '../database';
 
 export class UserService {
-  private readonly prisma: PrismaClient;
+  private readonly client: PrismaClient;
 
   constructor () {
-    this.prisma = new PrismaClient();
+    this.client = client;
   }
 
   async countAll (): Promise<number> {
-    return await this.prisma.user.count();
+    return await this.client.user.count();
   }
 
   async getAll ({ skip, take }: { skip?: number, take?: number }): Promise<Array<Partial<User>>> {
-    const users = await this.prisma.user.findMany({
+    const users = await this.client.user.findMany({
       select: {
         id: true,
         name: true,
