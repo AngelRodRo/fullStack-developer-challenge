@@ -1,5 +1,10 @@
+import { type Resolvers } from '../../__generated__/graphql';
+import { dateScalar } from '../scalars/Date';
 import queries from './queries';
 
-export default {
+const resolvers: Resolvers = {
+  Date: dateScalar,
   ...queries
 };
+
+export default resolvers;
