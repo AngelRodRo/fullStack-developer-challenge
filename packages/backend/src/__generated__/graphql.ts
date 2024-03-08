@@ -6,6 +6,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -18,24 +19,25 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  create?: Maybe<User>;
-  edit?: Maybe<User>;
-  remove?: Maybe<Scalars['Int']['output']>;
+  createUser?: Maybe<User>;
+  editUser?: Maybe<User>;
+  removeUser?: Maybe<Scalars['Int']['output']>;
 };
 
 
-export type MutationCreateArgs = {
-  name?: InputMaybe<Scalars['String']['input']>;
+export type MutationCreateUserArgs = {
+  userInput: UserCreateInput;
 };
 
 
-export type MutationEditArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
+export type MutationEditUserArgs = {
+  id: Scalars['Int']['input'];
+  userInput: UserEditInput;
 };
 
 
-export type MutationRemoveArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
+export type MutationRemoveUserArgs = {
+  id: Scalars['Int']['input'];
 };
 
 export type Query = {
@@ -60,6 +62,22 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Date']['output']>;
+};
+
+export type UserCreateInput = {
+  address: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+};
+
+export type UserEditInput = {
+  address: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
 };
 
 export type UserList = {
@@ -146,6 +164,8 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   User: ResolverTypeWrapper<User>;
+  UserCreateInput: UserCreateInput;
+  UserEditInput: UserEditInput;
   UserList: ResolverTypeWrapper<UserList>;
 };
 
@@ -158,6 +178,8 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   User: User;
+  UserCreateInput: UserCreateInput;
+  UserEditInput: UserEditInput;
   UserList: UserList;
 };
 
@@ -166,9 +188,9 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  create?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationCreateArgs>>;
-  edit?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<MutationEditArgs>>;
-  remove?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, Partial<MutationRemoveArgs>>;
+  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'userInput'>>;
+  editUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationEditUserArgs, 'id' | 'userInput'>>;
+  removeUser?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<MutationRemoveUserArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
