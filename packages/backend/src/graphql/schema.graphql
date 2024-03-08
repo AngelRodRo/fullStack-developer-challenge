@@ -1,13 +1,27 @@
+scalar Date
+
 type User {
+  id: Int
   email: String
   name: String
   lastName: String
   address: String
   phone: String
-  createdAt: String
-  updatedAt: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type UserList {
+  total: Int!
+  items: [User]!
 }
 
 type Query {
-  user: [User]
+  users(filter: String, skip: Int, take: Int): UserList!
+}
+
+type Mutation {
+  create(name: String): User
+  edit(id: Int): User
+  remove(id: Int): Int
 }
