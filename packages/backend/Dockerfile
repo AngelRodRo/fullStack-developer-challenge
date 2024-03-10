@@ -2,13 +2,11 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY packages/backend/package*.json ./
 
 RUN npm install
 
-COPY . .
-
-RUN npm run prisma:generate
+COPY packages/backend/. .
 
 RUN npm run build
 
