@@ -22,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: 'http://localhost:4000',
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_API,
   });
 
   return new NextSSRApolloClient({
