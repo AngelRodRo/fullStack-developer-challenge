@@ -11,7 +11,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_DB=${POSTGRES_DB}
   backend:
-    build: .
+    build: packages/backend
     restart: always
     depends_on:
       - postgres
@@ -19,5 +19,7 @@ services:
       - "4000:4000"
     environment:
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    command: >
+        bash -c "apt-get update && apt-get install -y wait-for-it && wait-for-it postgres:5432 -- npm run prisma:initmigrate && npm run prisma:seed"
 volumes:
   postgres:
