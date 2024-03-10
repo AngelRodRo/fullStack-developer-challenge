@@ -1,13 +1,12 @@
-import { shield } from 'graphql-shield';
+import { allow, shield } from 'graphql-shield';
 import { isAuthorized } from '../rules';
 
-export const permissions = shield({
-  Query: {
-    users: isAuthorized
+export const permissions = shield(
+  {
+    Mutation: {
+      login: allow
+    }
   },
-  Mutation: {
-    createUser: isAuthorized,
-    editUser: isAuthorized,
-    removeUser: isAuthorized
-  }
-});
+
+  { fallbackRule: isAuthorized }
+);
