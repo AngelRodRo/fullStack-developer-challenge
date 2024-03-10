@@ -5,7 +5,7 @@ import { type User } from '../__generated__/graphql';
 
 export const isAuthorized = rule()(async (_, __, ctx: MyContext) => {
   const authorization = ctx.token;
-  if (authorization === undefined || authorization === null) {
+  if (authorization === undefined || authorization === null || authorization === '') {
     return false;
   }
 

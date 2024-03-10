@@ -4,9 +4,12 @@ import { isAuthorized } from '../rules';
 export const permissions = shield(
   {
     Mutation: {
-      login: allow
+      login: allow,
+      createUser: isAuthorized,
+      editUser: isAuthorized,
+      removeUser: isAuthorized
     }
   },
 
-  { fallbackRule: isAuthorized }
+  { fallbackRule: allow, debug: true }
 );
