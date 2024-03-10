@@ -8,6 +8,8 @@ RUN npm install
 
 COPY packages/backend/. .
 
+RUN npm run prisma:generate
+
 RUN npm run build
 
 EXPOSE 4000
