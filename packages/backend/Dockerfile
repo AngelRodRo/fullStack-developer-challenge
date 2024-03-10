@@ -6,7 +6,9 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY packages/backend .
+COPY . .
+
+RUN npm run prisma:generate
 
 RUN npm run build
 
