@@ -1,22 +1,30 @@
 import { faker } from '@faker-js/faker';
 import { PrismaClient, type Prisma } from '@prisma/client';
+import { hash } from '../src/utils/encryption';
 
 const prisma = new PrismaClient();
 
-const createRandomUsers = (): Prisma.UserCreateInput => ({
+const createRandomUsers = async (): Promise<Prisma.UserCreateInput> => ({
   name: faker.person.firstName(),
   lastName: faker.person.lastName(),
   address: faker.location.streetAddress(),
-  password: faker.string.hexadecimal(),
+  password: await hash('123456'),
   phone: faker.phone.number(),
   email: faker.internet.email()
 });
 
 async function main (): Promise<void> {
-  const randomUsers = faker.helpers.multiple(createRandomUsers, { count: 100 });
-  await prisma.user.createMany({
-    data: randomUsers
-  });
+  const randomUsers: Prisma.UserCreateInput[] = [];
+  for (let i = 0; i < 100; i++) {
+    randomUsers.push(await createRandomUsers());
+  }
+  try {
+    await prisma.user.createMany({
+      data: randomUsers
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 main()
