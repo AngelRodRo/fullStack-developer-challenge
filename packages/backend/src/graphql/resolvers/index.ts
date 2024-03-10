@@ -7,7 +7,7 @@ import * as Query from './queries';
 const resolvers: Resolvers = {
   Date: dateScalar,
   Query,
-  Mutation
+  Mutation,
 };
 
 export default resolvers;

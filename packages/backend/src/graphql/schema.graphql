@@ -2,18 +2,18 @@ scalar Date
 
 type User {
   id: Int
-  email: String
-  name: String
-  lastName: String
-  address: String
-  phone: String
+  email: String!
+  name: String!
+  lastName: String!
+  address: String!
+  phone: String!
   createdAt: Date
   updatedAt: Date
 }
 
 type UserList {
   total: Int!
-  items: [User]!
+  items: [User!]!
 }
 
 input UserCreateInput {
@@ -32,6 +32,16 @@ input UserEditInput {
   phone: String!
 }
 
+input UserCredentials {
+  email: String!
+  password: String!
+}
+
+type UserSuccessLogin {
+  user: User!
+  token: String!
+}
+
 type Query {
   users(filter: String, skip: Int, take: Int): UserList!
 }
@@ -40,4 +50,5 @@ type Mutation {
   createUser(userInput: UserCreateInput!): User
   editUser(id: Int!, userInput: UserEditInput!): User
   removeUser(id: Int!): Int
+  login(userCredentials: UserCredentials!): UserSuccessLogin!
 }

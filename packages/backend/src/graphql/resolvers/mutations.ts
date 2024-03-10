@@ -1,10 +1,24 @@
 import { GraphQLError } from 'graphql';
 import { ValidationError } from 'yup';
 import { type MyContext } from '../../..';
-import { type MutationCreateUserArgs, type MutationEditUserArgs, type MutationRemoveUserArgs, type User } from '../../__generated__/graphql';
-import { userCreationSchema, userEditionSchema } from '../../validators/schemas';
+import {
+  type MutationCreateUserArgs,
+  type MutationEditUserArgs,
+  type MutationLoginArgs,
+  type MutationRemoveUserArgs,
+  type User,
+  type UserSuccessLogin
+} from '../../__generated__/graphql';
+import {
+  userCreationSchema,
+  userEditionSchema
+} from '../../validators/schemas';
 
-export const createUser = async (_: any, { userInput }: MutationCreateUserArgs, { dataSources }: MyContext): Promise<User> => {
+export const createUser = async (
+  _: any,
+  { userInput }: MutationCreateUserArgs,
+  { dataSources }: MyContext
+): Promise<User> => {
   try {
     await userCreationSchema.validate(userInput);
   } catch (error) {
@@ -20,7 +34,11 @@ export const createUser = async (_: any, { userInput }: MutationCreateUserArgs, 
   return user;
 };
 
-export const editUser = async (_: any, { id, userInput }: MutationEditUserArgs, { dataSources }: MyContext): Promise<User> => {
+export const editUser = async (
+  _: any,
+  { id, userInput }: MutationEditUserArgs,
+  { dataSources }: MyContext
+): Promise<User> => {
   try {
     await userEditionSchema.validate(userInput);
   } catch (error) {
@@ -36,7 +54,23 @@ export const editUser = async (_: any, { id, userInput }: MutationEditUserArgs, 
   return user;
 };
 
-export const removeUser = async (_: any, { id }: MutationRemoveUserArgs, { dataSources }: MyContext): Promise<number> => {
+export const removeUser = async (
+  _: any,
+  { id }: MutationRemoveUserArgs,
+  { dataSources }: MyContext
+): Promise<number> => {
   const result = await dataSources.userService.remove(id);
+  return result;
+};
+
+export const login = async (
+  _: any,
+  { userCredentials }: MutationLoginArgs,
+  { dataSources }: MyContext
+): Promise<UserSuccessLogin> => {
+  const result = await dataSources.userService.login(
+    userCredentials.email,
+    userCredentials.password
+  );
   return result;
 };
