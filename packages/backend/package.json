@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@impulse-challenge/backend",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Angel <aleangrodriguez123@gmail.com>",
@@ -7,10 +7,11 @@
   "license": "ISC",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "prisma generate && npm run codegen",
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon index.ts",
-    "codegen": "graphql-codegen --config codegen.ts --watch"
+    "dev": "concurrently \"nodemon index.ts\" \"npm run codegen --watch\"",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -18,11 +19,17 @@
   "dependencies": {
     "@apollo/server": "^4.10.1",
     "@faker-js/faker": "^8.4.1",
+    "@graphql-tools/schema": "^10.0.3",
     "@prisma/client": "^5.10.2",
     "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "dotenv": "^16.3.2",
     "graphql": "^16.8.1",
+    "graphql-middleware": "^6.1.35",
+    "graphql-shield": "^7.6.5",
     "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.2",
+    "shared-types": "^1.0.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
@@ -31,6 +38,8 @@
     "@graphql-codegen/typescript": "4.0.6",
     "@graphql-codegen/typescript-resolvers": "4.0.6",
     "@parcel/watcher": "^2.4.1",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
@@ -44,7 +53,6 @@
     "prettier": "^3.2.4",
     "prisma": "^5.10.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3",
-    "@types/bcrypt": "^5.0.2"
+    "typescript": "^5.3.3"
   }
 }
