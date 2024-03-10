@@ -1,31 +1,68 @@
-import { Button } from './Button';
-import { Input } from './Input';
+'use client';
 
+import { Button } from './Button';
+
+import { Input } from './Input';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '@/graphql/mutations';
+import { useCallback } from 'react';
+import { AUTH_TOKEN } from '@/constants';
+import { navigate } from '@/utils/actions';
+
+type LoginFormInputs = {
+  email: string;
+  password: string;
+};
 const LoginForm: React.FC = () => {
+  const { register, handleSubmit } = useForm<LoginFormInputs>();
+
+  const [userLogin] = useMutation(LOGIN);
+
+  const onSubmit = useCallback(
+    async (data: LoginFormInputs) => {
+      const result = await userLogin({ variables: { userInput: data } });
+      localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
+      navigate('/dashboard');
+    },
+    [userLogin],
+  );
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
       <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
           <div className="px-5 py-7">
-            <Input label="E-mail" />
-            <Input label="Password" />
-            <Button>
-              <span className="inline-block mr-2">Login</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-4 h-4 inline-block"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                data-testid="email-input"
+                label="E-mail"
+                {...register('email', { required: true })}
+              />
+              <Input
+                data-testid="password-input"
+                label="Password"
+                type="password"
+                {...register('password', { required: true })}
+              />
+              <Button type="submit">
+                <span className="inline-block mr-2">Login</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-4 h-4 inline-block"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Button>
+            </form>
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2 gap-1">
