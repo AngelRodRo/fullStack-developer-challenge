@@ -7,7 +7,7 @@
   "license": "ISC",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "npm run prisma:initmigrate && npm run seed && prisma generate && npm run codegen",
+    "prebuild": "npm run codegen",
     "build": "npx tsc",
     "prisma:initmigrate": "prisma migrate dev --name init",
     "prisma:seed": "prisma db seed",
