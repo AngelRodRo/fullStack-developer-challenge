@@ -3,10 +3,8 @@ import { useMutation } from '@apollo/client';
 import {CREATE_USER, EDIT_USER, REMOVE_USER} from '@/graphql/mutations';
 import {UserCreateInput, UserEditInput} from "@/__generated__/graphql";
 
-interface UserActionOptions {
-  refetch: () => void;
-}
-export const useUserActions = ({ refetch }: UserActionOptions) => {
+
+export const useUserActions = () => {
   const [removeUser] = useMutation(REMOVE_USER);
   const [editUser] = useMutation(EDIT_USER);
   const [createUser] = useMutation(CREATE_USER);
@@ -19,7 +17,6 @@ export const useUserActions = ({ refetch }: UserActionOptions) => {
         },
       });
       console.log('Created user:', data?.createUser);
-      refetch();
     } catch (e) {
       console.error('Error creating user:', e);
     }
@@ -34,11 +31,10 @@ export const useUserActions = ({ refetch }: UserActionOptions) => {
         }
       });
       console.log('Edited user:', data?.editUser);
-      refetch();
     } catch (error) {
       console.error('Error editing user:', error);
     }
-  }, [editUser, refetch]) ;
+  }, [editUser]) ;
 
   const handleRemove = useCallback(
     async (id: number) => {
@@ -46,13 +42,12 @@ export const useUserActions = ({ refetch }: UserActionOptions) => {
         await removeUser({
           variables: { id },
         });
-        refetch();
         console.log('User removed successfully');
       } catch (error) {
         console.error('Error removing user:', error);
       }
     },
-    [refetch, removeUser],
+    [removeUser],
   );
 
   return { handleCreateUser, handleEditUser, handleRemove };
