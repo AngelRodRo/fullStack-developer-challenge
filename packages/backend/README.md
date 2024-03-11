@@ -1,4 +1,4 @@
-<h1>Full Stack challenge - Frontend App</h1>
+<h1>Full Stack challenge - Backend API</h1>
 
 ## Live Demo
 
