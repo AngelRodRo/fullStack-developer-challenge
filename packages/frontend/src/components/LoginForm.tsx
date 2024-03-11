@@ -9,6 +9,10 @@ import { LOGIN } from '@/graphql/mutations';
 import { useCallback } from 'react';
 import { AUTH_TOKEN } from '@/constants';
 import { navigate } from '@/utils/actions';
+import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
+import { GraphQLError } from 'graphql/error';
+import { UNEXPECTED_ERROR } from '@/constants/errorMessages';
 
 type LoginFormInputs = {
   email: string;
@@ -17,24 +21,39 @@ type LoginFormInputs = {
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormInputs>();
 
-  const [userLogin] = useMutation(LOGIN);
+  const [userLogin, { loading }] = useMutation(LOGIN);
 
   const onSubmit = useCallback(
     async (data: LoginFormInputs) => {
-      const result = await userLogin({ variables: { userInput: data } });
-      localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
-      navigate('/dashboard');
+      try {
+        const result = await userLogin({ variables: { userInput: data } });
+        localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
+        toast("Login successfully!", { type: "success" })
+        navigate('/dashboard');
+      } catch (e: any) {
+        toast(e.message ?? UNEXPECTED_ERROR, { type: "error" })
+      }
     },
     [userLogin],
   );
 
-  return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+  const renderForm = useCallback(() => {
+    if (loading) {
+      return <ClipLoader
+        color="blue"
+        className="self-center"
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    }
+    return (
       <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
           <div className="px-5 py-7">
             <form onSubmit={handleSubmit(onSubmit)}>
               <Input
+                type="email"
                 data-testid="email-input"
                 label="E-mail"
                 {...register('email', { required: true })}
@@ -67,7 +86,8 @@ const LoginForm: React.FC = () => {
           <div className="py-5">
             <div className="grid grid-cols-2 gap-1">
               <div className="text-center sm:text-left whitespace-nowrap">
-                <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
+                <button
+                  className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -89,6 +109,14 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
       </div>
+    )
+  }, [handleSubmit, onSubmit, register]);
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+
+        {renderForm()}
+
     </div>
   );
 };
