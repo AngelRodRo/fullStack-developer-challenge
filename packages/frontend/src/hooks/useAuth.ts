@@ -24,6 +24,5 @@ export const useAuth = () => {
   useEffect(() => {
     setAuthenticated(isAuthenticated())
   }, []);
-  console.log("authenticated", authenticated);
   return { authenticated };
 }
