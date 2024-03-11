@@ -21,21 +21,17 @@ type LoginFormInputs = {
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormInputs>();
 
-  const [loading, setLoading] = useState(false);
-  const [userLogin] = useMutation(LOGIN);
+  const [userLogin, { loading }] = useMutation(LOGIN);
 
   const onSubmit = useCallback(
     async (data: LoginFormInputs) => {
       try {
-        setLoading(true);
         const result = await userLogin({ variables: { userInput: data } });
         localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
         toast('Login successfully!', { type: 'success' });
         navigate('/dashboard');
       } catch (e: any) {
         toast(e.message ?? UNEXPECTED_ERROR, { type: 'error' });
-      } finally {
-        setLoading(false);
       }
     },
     [userLogin],
@@ -115,7 +111,7 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
     );
-  }, [handleSubmit, onSubmit, register]);
+  }, [handleSubmit, loading, onSubmit, register]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
