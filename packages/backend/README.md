@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-Demo: https://full-stack-challenge-ale.vercel.app/
+Demo: https://fullstack-challenge.azurewebsites.net
 
 ## 🚀 Getting Started
 
