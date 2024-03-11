@@ -11,7 +11,7 @@ interface Props {
 
 export const EditUserModal: React.FC<Props> = ({ onClose, onEditUser, user }) => {
   const renderedHeader = useMemo(
-    () => <h1 className="text-2xl">Create a new user</h1>,
+    () => <h1 className="text-2xl">Edit user</h1>,
     [],
   );
   return (
