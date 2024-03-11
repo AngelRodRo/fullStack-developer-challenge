@@ -28,6 +28,8 @@ Demo: https://full-stack-challenge-ale.vercel.app/
     docker-compose up
     ```
    This command initializes the database using the **docker-compose.yml** file located in the folder, utilizing the variables specified in the .env file.
+   <br/> <br/>
+   **Note:** You can inspect your database data using **npx prisma studio**, which opens a database manager in your browser. For testing purposes, all users have the default password "123456".
 
 
 3. Execute the command to initialize the database schema, generate types, and seed data (available only in the development environment):
