@@ -4,6 +4,10 @@ import { hash } from '../src/utils/encryption';
 
 const prisma = new PrismaClient();
 
+if (!['development', 'local'].includes(process.env.NODE_ENV ?? 'local')) {
+  throw new Error('It is not allowed to seed production databases');
+}
+
 const createRandomUsers = async (): Promise<Prisma.UserCreateInput> => ({
   name: faker.person.firstName(),
   lastName: faker.person.lastName(),
