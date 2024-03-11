@@ -6,7 +6,7 @@ import { Input } from './Input';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '@/graphql/mutations';
-import { useCallback } from 'react';
+import {useCallback, useState} from 'react';
 import { AUTH_TOKEN } from '@/constants';
 import { navigate } from '@/utils/actions';
 import { ClipLoader } from 'react-spinners';
@@ -21,17 +21,21 @@ type LoginFormInputs = {
 const LoginForm: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormInputs>();
 
-  const [userLogin, { loading }] = useMutation(LOGIN);
+  const [loading, setLoading] = useState(false);
+  const [userLogin] = useMutation(LOGIN);
 
   const onSubmit = useCallback(
     async (data: LoginFormInputs) => {
       try {
+        setLoading(true);
         const result = await userLogin({ variables: { userInput: data } });
         localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
         toast('Login successfully!', { type: 'success' });
         navigate('/dashboard');
       } catch (e: any) {
         toast(e.message ?? UNEXPECTED_ERROR, { type: 'error' });
+      } finally {
+        setLoading(false);
       }
     },
     [userLogin],

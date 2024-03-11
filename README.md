@@ -40,6 +40,12 @@ npm run test
 
 The project's continuous integration and continuous deployment (CI/CD) pipeline were established using GitHub Actions, which integrates with Azure App Service for container deployment, and Vercel for hosting the Next.js application. Check the pipeline workflow file here: [Main workflow file](.github/workflows/main_fullstack-challenge.yml)
 
+### Identified issues
+
+1. **Pagination Behavior:** Clicking 'next' in the users table multiple times causes the 'prev' button to stop working properly.
+    <br/> <br/>
+   **Note:** I didn't have enough time to fix this problem, but I'm aware of it and understand how it affects the user experience.
+
 ### How to Make It Better
 1. **Improved Error Handling**: Make error messages clearer and handle errors better so users understand what's happening.
 
