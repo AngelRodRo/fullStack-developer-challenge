@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "npm run codegen",
     "build": "npx tsc",
-    "db:startup": "npm run prisma:init-migrate && npm run prisma:generate",
+    "db:startup": "npm run prisma:init-migrate && npm run prisma:generate && npm run prisma:seed",
     "prisma:generate": "prisma generate",
     "prisma:init-migrate": "prisma migrate dev --name init",
     "prisma:seed": "prisma db seed",
