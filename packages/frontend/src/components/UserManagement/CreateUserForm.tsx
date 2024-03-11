@@ -38,7 +38,7 @@ export const CreateUserForm: React.FC<CreateUserFormProps> = ({ onCreateUser }) 
         <Input data-testid="input-lastname" label="LastName" {...register('lastName', { required: true })} />
         <Input data-testid="input-address" label="Address" {...register('address', { required: true })} />
         <Input data-testid="input-phone" label="Phone" {...register('phone', { required: true })} />
-        <Input data-testid="input-email" label="Email" {...register('email', { required: true })} />
+        <Input data-testid="input-email" label="Email" type="email" {...register('email', { required: true })} />
         <Input
           data-testid="input-password"
           label="Password"
