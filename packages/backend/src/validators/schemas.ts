@@ -1,6 +1,6 @@
 import { object, string, type ObjectSchema } from 'yup';
 import {
-  type UserCreateInput,
+  type UserCreateInput, type UserCredentials,
   type UserEditInput
 } from '../__generated__/graphql';
 
@@ -18,4 +18,9 @@ export const userEditionSchema: ObjectSchema<UserEditInput> = object({
   lastName: string().required(),
   address: string().required(),
   phone: string().required()
+});
+
+export const userLoginSchema: ObjectSchema<UserCredentials> = object({
+  email: string().email().required(),
+  password: string().required()
 });

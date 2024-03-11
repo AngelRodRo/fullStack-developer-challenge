@@ -11,7 +11,7 @@ import {
 } from '../../__generated__/graphql';
 import {
   userCreationSchema,
-  userEditionSchema
+  userEditionSchema, userLoginSchema
 } from '../../validators/schemas';
 
 export const createUser = async (
@@ -68,6 +68,17 @@ export const login = async (
   { userCredentials }: MutationLoginArgs,
   { dataSources }: MyContext
 ): Promise<UserSuccessLogin> => {
+  try {
+    await userLoginSchema.validate(userCredentials);
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw new GraphQLError(error.message, {
+        extensions: {
+          code: 'BAD_USER_INPUT'
+        }
+      });
+    }
+  }
   const result = await dataSources.userService.login(
     userCredentials.email,
     userCredentials.password
