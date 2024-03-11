@@ -22,8 +22,27 @@ permissions:
   packages: 'write'
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with Lerna
+        run: npx lerna run test
   build:
     runs-on: ubuntu-latest
+
+    needs: test
 
     steps:
       - uses: actions/checkout@v4
