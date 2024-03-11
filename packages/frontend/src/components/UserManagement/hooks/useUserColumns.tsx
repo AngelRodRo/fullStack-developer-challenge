@@ -18,9 +18,9 @@ export const useUserColumns = ({ handleRemove, handleSelectedUser }: UserColumns
     (user: User) => {
       return (
         <div>
-          <div onClick={() => handleSelectedUser(user)}>Edit</div>
+          <div className="bg-amber-200 w-fit px-2 rounded cursor-pointer" onClick={() => handleSelectedUser(user)}>Edit</div>
           {user.id && (
-            <div onClick={() => handleRemove(user.id ?? 0)}>Delete</div>
+            <div className="bg-red-500 w-fit px-2 rounded text-white cursor-pointer" onClick={() => handleRemove(user.id ?? 0)}>Delete</div>
           )}
         </div>
       );
