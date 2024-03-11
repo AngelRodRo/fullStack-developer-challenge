@@ -1,13 +1,11 @@
 'use client'
 
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import isAuth from '@/components/isAuth';
+import { Analytics } from '@/components/DashboardHome/Analytics';
 
 const Page = () => {
   return (
-    <DashboardLayout>
-      <div>This is the dashboard</div>
-    </DashboardLayout>
+    <Analytics />
   );
 }
 
