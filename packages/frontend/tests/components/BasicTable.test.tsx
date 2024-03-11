@@ -6,7 +6,6 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { UserColumns } from '@/components/UserManagement/hooks/useUserColumns';
 
 describe('BasicTable', () => {
-
   const columnHelper = createColumnHelper();
 
   const columns = [
@@ -38,7 +37,7 @@ describe('BasicTable', () => {
         columns={columns}
         setPagination={setPagination}
         pagination={pagination}
-      />
+      />,
     );
 
     expect(getByText('id')).toBeInTheDocument();
@@ -46,6 +45,5 @@ describe('BasicTable', () => {
 
     expect(getByText('John Doe')).toBeInTheDocument();
     expect(getByText('Jane Doe')).toBeInTheDocument();
-
   });
 });

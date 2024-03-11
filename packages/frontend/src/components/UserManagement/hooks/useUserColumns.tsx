@@ -11,16 +11,29 @@ interface UserColumnsOptions {
   handleRemove: (id: number) => void;
 }
 
-export const useUserColumns = ({ handleRemove, handleSelectedUser }: UserColumnsOptions) => {
+export const useUserColumns = ({
+  handleRemove,
+  handleSelectedUser,
+}: UserColumnsOptions) => {
   const columnHelper = createColumnHelper<UserColumns>();
 
   const renderActions = useCallback(
     (user: User) => {
       return (
         <div>
-          <div className="bg-amber-200 w-fit px-2 rounded cursor-pointer" onClick={() => handleSelectedUser(user)}>Edit</div>
+          <div
+            className="bg-amber-200 w-fit px-2 rounded cursor-pointer"
+            onClick={() => handleSelectedUser(user)}
+          >
+            Edit
+          </div>
           {user.id && (
-            <div className="bg-red-500 w-fit px-2 rounded text-white cursor-pointer" onClick={() => handleRemove(user.id ?? 0)}>Delete</div>
+            <div
+              className="bg-red-500 w-fit px-2 rounded text-white cursor-pointer"
+              onClick={() => handleRemove(user.id ?? 0)}
+            >
+              Delete
+            </div>
           )}
         </div>
       );

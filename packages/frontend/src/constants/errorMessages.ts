@@ -1,1 +1,1 @@
-export const UNEXPECTED_ERROR = "Unexpected error happened";
+export const UNEXPECTED_ERROR = 'Unexpected error happened';

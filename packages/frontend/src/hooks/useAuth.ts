@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { jwtDecode } from 'jwt-decode';
 import { AUTH_TOKEN } from '@/constants';
 import { useEffect, useState } from 'react';
@@ -17,12 +17,12 @@ const isAuthenticated = (): boolean => {
     }
   }
   return false;
-}
+};
 
 export const useAuth = () => {
   const [authenticated, setAuthenticated] = useState<boolean>();
   useEffect(() => {
-    setAuthenticated(isAuthenticated())
+    setAuthenticated(isAuthenticated());
   }, []);
   return { authenticated };
-}
+};

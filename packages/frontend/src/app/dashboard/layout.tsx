@@ -2,8 +2,8 @@ import { Sidebar } from '@/components/Sidebar';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dashboard'
-}
+  title: 'Dashboard',
+};
 
 export default function DashboardLayout({
   children,
@@ -21,4 +21,3 @@ export default function DashboardLayout({
     </div>
   );
 }
-

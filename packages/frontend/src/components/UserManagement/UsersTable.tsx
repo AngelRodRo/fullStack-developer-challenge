@@ -48,38 +48,47 @@ export const UsersTable = () => {
 
   const { handleCreateUser, handleRemove, handleEditUser } = useUserActions();
 
-  const onCreateUser = useCallback(async (data: UserCreateInput) => {
-    try {
-      await handleCreateUser(data);
-      toast.success("User is created successfully!")
-      refetch();
-      hideCreateModal();
-    } catch (e) {
-      toast.error(UNEXPECTED_ERROR);
-    }
-  }, [handleCreateUser, hideCreateModal, refetch]);
+  const onCreateUser = useCallback(
+    async (data: UserCreateInput) => {
+      try {
+        await handleCreateUser(data);
+        toast.success('User is created successfully!');
+        refetch();
+        hideCreateModal();
+      } catch (e) {
+        toast.error(UNEXPECTED_ERROR);
+      }
+    },
+    [handleCreateUser, hideCreateModal, refetch],
+  );
 
-  const onEditUser = useCallback(async (id: number, data: UserEditInput) => {
-    try {
-      await handleEditUser(id, data);
-      toast.success("User is edited successfully!")
-      refetch();
+  const onEditUser = useCallback(
+    async (id: number, data: UserEditInput) => {
+      try {
+        await handleEditUser(id, data);
+        toast.success('User is edited successfully!');
+        refetch();
 
-      hideEditModal();
-    } catch (e) {
-      toast.error(UNEXPECTED_ERROR);
-    }
-  }, [handleEditUser, hideEditModal, refetch]);
+        hideEditModal();
+      } catch (e) {
+        toast.error(UNEXPECTED_ERROR);
+      }
+    },
+    [handleEditUser, hideEditModal, refetch],
+  );
 
-  const onRemoveUser = useCallback(async (id: number) => {
-    try {
-      await handleRemove(id);
-      refetch();
-      toast.success("User is removed successfully!")
-    } catch (e) {
-      toast.error(UNEXPECTED_ERROR);
-    }
-  }, [handleRemove, refetch]);
+  const onRemoveUser = useCallback(
+    async (id: number) => {
+      try {
+        await handleRemove(id);
+        refetch();
+        toast.success('User is removed successfully!');
+      } catch (e) {
+        toast.error(UNEXPECTED_ERROR);
+      }
+    },
+    [handleRemove, refetch],
+  );
 
   const handleSelectedUser = useCallback(
     (user: User) => {
@@ -105,18 +114,20 @@ export const UsersTable = () => {
             data-testid="loader"
           />
         </div>
-      )
+      );
     }
     if (data) {
-      return <BasicTable<UserColumns>
-        pagination={pagination}
-        setPagination={setPagination}
-        total={data.users.total}
-        data={data.users.items}
-        columns={columns}
-      />
+      return (
+        <BasicTable<UserColumns>
+          pagination={pagination}
+          setPagination={setPagination}
+          total={data.users.total}
+          data={data.users.items}
+          columns={columns}
+        />
+      );
     }
-  }, [columns, data, loading, pagination])
+  }, [columns, data, loading, pagination]);
 
   return (
     <div className="mx-auto px-4 sm:px-8">
@@ -137,7 +148,9 @@ export const UsersTable = () => {
             onEditUser={onEditUser}
           />
         )}
-        <Button className="w-40" onClick={showCreateModal}>Create new user</Button>
+        <Button className="w-40" onClick={showCreateModal}>
+          Create new user
+        </Button>
         {renderTable()}
       </div>
     </div>

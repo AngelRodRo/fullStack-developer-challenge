@@ -21,7 +21,7 @@ describe('EditUserForm', () => {
 
   it('renders form inputs with correct default values and submits with updated values', async () => {
     const { getByTestId, getByText } = render(
-      <EditUserForm user={user} onEditUser={onEditUserMock} />
+      <EditUserForm user={user} onEditUser={onEditUserMock} />,
     );
 
     expect(getByTestId('input-name')).toHaveValue('John');
@@ -30,9 +30,15 @@ describe('EditUserForm', () => {
     expect(getByTestId('input-phone')).toHaveValue('123456789');
 
     fireEvent.change(getByTestId('input-name'), { target: { value: 'Jane' } });
-    fireEvent.change(getByTestId('input-lastname'), { target: { value: 'Smith' } });
-    fireEvent.change(getByTestId('input-address'), { target: { value: '456 Avenue' } });
-    fireEvent.change(getByTestId('input-phone'), { target: { value: '987654321' } });
+    fireEvent.change(getByTestId('input-lastname'), {
+      target: { value: 'Smith' },
+    });
+    fireEvent.change(getByTestId('input-address'), {
+      target: { value: '456 Avenue' },
+    });
+    fireEvent.change(getByTestId('input-phone'), {
+      target: { value: '987654321' },
+    });
 
     fireEvent.click(getByText('Edit'));
 
@@ -45,6 +51,4 @@ describe('EditUserForm', () => {
       });
     });
   });
-
-
 });

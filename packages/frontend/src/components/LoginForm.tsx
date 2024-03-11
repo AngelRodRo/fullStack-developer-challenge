@@ -28,10 +28,10 @@ const LoginForm: React.FC = () => {
       try {
         const result = await userLogin({ variables: { userInput: data } });
         localStorage.setItem(AUTH_TOKEN, result.data?.login?.token ?? '');
-        toast("Login successfully!", { type: "success" })
+        toast('Login successfully!', { type: 'success' });
         navigate('/dashboard');
       } catch (e: any) {
-        toast(e.message ?? UNEXPECTED_ERROR, { type: "error" })
+        toast(e.message ?? UNEXPECTED_ERROR, { type: 'error' });
       }
     },
     [userLogin],
@@ -39,13 +39,15 @@ const LoginForm: React.FC = () => {
 
   const renderForm = useCallback(() => {
     if (loading) {
-      return <ClipLoader
-        color="blue"
-        className="self-center"
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+      return (
+        <ClipLoader
+          color="blue"
+          className="self-center"
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      );
     }
     return (
       <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
@@ -86,8 +88,7 @@ const LoginForm: React.FC = () => {
           <div className="py-5">
             <div className="grid grid-cols-2 gap-1">
               <div className="text-center sm:text-left whitespace-nowrap">
-                <button
-                  className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
+                <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -109,14 +110,12 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }, [handleSubmit, onSubmit, register]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
-
-        {renderForm()}
-
+      {renderForm()}
     </div>
   );
 };

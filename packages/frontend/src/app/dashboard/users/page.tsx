@@ -1,12 +1,10 @@
-'use client'
+'use client';
 
 import { UsersTable } from '@/components/UserManagement/UsersTable';
 import isAuth from '@/components/isAuth';
 
 const Page = () => {
-  return (
-      <UsersTable />
-  );
-}
+  return <UsersTable />;
+};
 
 export default isAuth(Page);

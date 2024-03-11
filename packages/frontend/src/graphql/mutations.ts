@@ -1,17 +1,16 @@
 import { graphql } from '@/__generated__';
 
 export const LOGIN = graphql(`
-    mutation login($userInput: UserCredentials!) {
-        login(userCredentials: $userInput) {
-            user {
-                id
-                email
-            }
-            token
-        }
+  mutation login($userInput: UserCredentials!) {
+    login(userCredentials: $userInput) {
+      user {
+        id
+        email
+      }
+      token
     }
+  }
 `);
-
 
 export const CREATE_USER = graphql(`
   mutation CreateUser($userInput: UserCreateInput!) {

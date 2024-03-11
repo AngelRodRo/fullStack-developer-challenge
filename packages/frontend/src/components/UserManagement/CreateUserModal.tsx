@@ -1,7 +1,7 @@
 import { Modal } from '@/components/Modal';
 import { CreateUserForm } from '@/components/UserManagement/CreateUserForm';
 import React, { useMemo } from 'react';
-import {UserCreateInput} from "@/__generated__/graphql";
+import { UserCreateInput } from '@/__generated__/graphql';
 
 interface Props {
   onCreateUser: (data: UserCreateInput) => void;

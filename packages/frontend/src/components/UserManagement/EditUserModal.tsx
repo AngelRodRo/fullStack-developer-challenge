@@ -1,7 +1,7 @@
 import { Modal } from '@/components/Modal';
 import React, { useMemo } from 'react';
-import {User, UserEditInput} from "@/__generated__/graphql";
-import {EditUserForm} from "@/components/UserManagement/EditUserForm";
+import { User, UserEditInput } from '@/__generated__/graphql';
+import { EditUserForm } from '@/components/UserManagement/EditUserForm';
 
 interface Props {
   user: User;
@@ -9,7 +9,11 @@ interface Props {
   onClose: () => void;
 }
 
-export const EditUserModal: React.FC<Props> = ({ onClose, onEditUser, user }) => {
+export const EditUserModal: React.FC<Props> = ({
+  onClose,
+  onEditUser,
+  user,
+}) => {
   const renderedHeader = useMemo(
     () => <h1 className="text-2xl">Edit user</h1>,
     [],

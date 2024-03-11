@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import LoginForm from '@/components/LoginForm';
 import { useAuth } from '@/hooks/useAuth';
 import { navigate } from '@/utils/actions';
@@ -11,8 +11,8 @@ export default function Home() {
   }
 
   if (authenticated) {
-    navigate('/dashboard')
-    return
+    navigate('/dashboard');
+    return;
   }
 
   return <LoginForm />;

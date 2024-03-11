@@ -10,7 +10,10 @@ export const Input: React.FC<Props> = forwardRef<HTMLInputElement, Props>(
     return (
       <>
         {label && (
-          <label htmlFor={props.name} className="font-semibold text-sm text-gray-600 pb-1 block">
+          <label
+            htmlFor={props.name}
+            className="font-semibold text-sm text-gray-600 pb-1 block"
+          >
             {label}
           </label>
         )}

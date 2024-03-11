@@ -1,6 +1,6 @@
-"use client"
+'use client';
 import cn from 'classnames';
-import Link from 'next/link'
+import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import { AUTH_TOKEN } from '@/constants';
 import { navigate } from '@/utils/actions';
@@ -12,11 +12,11 @@ interface Props {
 type SidebarSubItem = {
   label: string;
   path: string;
-}
+};
 
 interface SidebarItems {
   group: string;
-  items: SidebarSubItem[]
+  items: SidebarSubItem[];
 }
 
 export const Sidebar: React.FC<Props> = ({ className }) => {
@@ -24,33 +24,36 @@ export const Sidebar: React.FC<Props> = ({ className }) => {
 
   const items: SidebarItems[] = [
     {
-      group: "Analytics",
+      group: 'Analytics',
       items: [
         {
-          label: "Home",
-          path: "/dashboard"
-        }
-      ]
+          label: 'Home',
+          path: '/dashboard',
+        },
+      ],
     },
     {
-      group: "Content",
+      group: 'Content',
       items: [
         {
-          label: "User",
-          path: "/dashboard/users"
-        }
-      ]
-    }
-  ]
+          label: 'User',
+          path: '/dashboard/users',
+        },
+      ],
+    },
+  ];
 
   const handleLogout = useCallback(() => {
-    localStorage.setItem(AUTH_TOKEN, "");
-    navigate("/")
+    localStorage.setItem(AUTH_TOKEN, '');
+    navigate('/');
   }, []);
 
   return (
     <>
-      <div className="fixed w-20 block md:hidden z-10 m-2" onClick={() => setIsOpen(!isOpen)}>
+      <div
+        className="fixed w-20 block md:hidden z-10 m-2"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <button className="relative group">
           <div className="relative flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 ring-opacity-30 duration-200 shadow-md">
             <div className="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 origin-center overflow-hidden ">
